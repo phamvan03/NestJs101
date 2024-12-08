@@ -1,0 +1,2471 @@
+{
+  "E:\\Test\\test-nest1": {
+    "versionSfCore": null,
+    "versionFramework": "4.4.14",
+    "isWithinCompose": false,
+    "isCompose": false,
+    "composeOrgName": null,
+    "composeResolverProviders": {
+      "default-aws-credential-resolver": "<REDACTED>",
+      "self": {
+        "instance": {
+          "credentials": "<REDACTED>",
+          "serviceConfigFile": {
+            "service": "vanpd-TestNest1",
+            "provider": {
+              "name": "aws",
+              "runtime": "nodejs18.x",
+              "region": "ap-northeast-1",
+              "timeout": 10,
+              "memorySize": 512,
+              "stage": "dev",
+              "environment": {
+                "TABLE_NAMES": "vantest-tasks,vantest-users"
+              },
+              "iamRoleStatements": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:CreateTable",
+                    "dynamodb:PutItem",
+                    "dynamodb:GetItem",
+                    "dynamodb:UpdateItem",
+                    "dynamodb:DescribeTable",
+                    "dynamodb:Query",
+                    "dynamodb:Scan",
+                    "dynamodb:DeleteItem"
+                  ],
+                  "Resource": "arn:aws:dynamodb:ap-northeast-1:727646477609:table/*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "apigateway:GET",
+                    "apigateway:POST",
+                    "apigateway:PUT",
+                    "apigateway:DELETE"
+                  ],
+                  "Resource": "arn:aws:apigateway:ap-northeast-1::/*"
+                }
+              ],
+              "versionFunctions": true,
+              "compiledCloudFormationTemplate": {
+                "AWSTemplateFormatVersion": "2010-09-09",
+                "Description": "The AWS CloudFormation template for this Serverless application",
+                "Resources": {
+                  "MainLogGroup": {
+                    "Type": "AWS::Logs::LogGroup",
+                    "Properties": {
+                      "LogGroupName": "/aws/lambda/vanpd-TestNest1-dev-main"
+                    }
+                  },
+                  "IamRoleLambdaExecution": {
+                    "Type": "AWS::IAM::Role",
+                    "Properties": {
+                      "AssumeRolePolicyDocument": {
+                        "Version": "2012-10-17",
+                        "Statement": [
+                          {
+                            "Effect": "Allow",
+                            "Principal": {
+                              "Service": [
+                                "lambda.amazonaws.com"
+                              ]
+                            },
+                            "Action": [
+                              "sts:AssumeRole"
+                            ]
+                          }
+                        ]
+                      },
+                      "Policies": [
+                        {
+                          "PolicyName": {
+                            "Fn::Join": [
+                              "-",
+                              [
+                                "vanpd-TestNest1",
+                                "dev",
+                                "lambda"
+                              ]
+                            ]
+                          },
+                          "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                              {
+                                "Effect": "Allow",
+                                "Action": [
+                                  "logs:CreateLogStream",
+                                  "logs:CreateLogGroup",
+                                  "logs:TagResource"
+                                ],
+                                "Resource": [
+                                  {
+                                    "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/vanpd-TestNest1-dev*:*"
+                                  }
+                                ]
+                              },
+                              {
+                                "Effect": "Allow",
+                                "Action": [
+                                  "logs:PutLogEvents"
+                                ],
+                                "Resource": [
+                                  {
+                                    "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/vanpd-TestNest1-dev*:*:*"
+                                  }
+                                ]
+                              },
+                              {
+                                "Effect": "Allow",
+                                "Action": [
+                                  "dynamodb:CreateTable",
+                                  "dynamodb:PutItem",
+                                  "dynamodb:GetItem",
+                                  "dynamodb:UpdateItem",
+                                  "dynamodb:DescribeTable",
+                                  "dynamodb:Query",
+                                  "dynamodb:Scan",
+                                  "dynamodb:DeleteItem"
+                                ],
+                                "Resource": "arn:aws:dynamodb:ap-northeast-1:727646477609:table/*"
+                              },
+                              {
+                                "Effect": "Allow",
+                                "Action": [
+                                  "apigateway:GET",
+                                  "apigateway:POST",
+                                  "apigateway:PUT",
+                                  "apigateway:DELETE"
+                                ],
+                                "Resource": "arn:aws:apigateway:ap-northeast-1::/*"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "Path": "/",
+                      "RoleName": {
+                        "Fn::Join": [
+                          "-",
+                          [
+                            "vanpd-TestNest1",
+                            "dev",
+                            {
+                              "Ref": "AWS::Region"
+                            },
+                            "lambdaRole"
+                          ]
+                        ]
+                      }
+                    }
+                  },
+                  "MainLambdaFunction": {
+                    "Type": "AWS::Lambda::Function",
+                    "Properties": {
+                      "Code": {
+                        "S3Bucket": "serverless-framework-deployments-ap-northeast-1-6eac5d24-5572",
+                        "S3Key": "serverless/vanpd-TestNest1/dev/1733427535137-2024-12-05T19:38:55.137Z/vanpd-TestNest1.zip"
+                      },
+                      "Handler": "dist/src/lambda.handler",
+                      "Runtime": "nodejs18.x",
+                      "FunctionName": "vanpd-TestNest1-dev-main",
+                      "MemorySize": 512,
+                      "Timeout": 10,
+                      "Environment": {
+                        "Variables": {
+                          "TABLE_NAMES": "vantest-tasks,vantest-users"
+                        }
+                      },
+                      "Role": {
+                        "Fn::GetAtt": [
+                          "IamRoleLambdaExecution",
+                          "Arn"
+                        ]
+                      }
+                    },
+                    "DependsOn": [
+                      "MainLogGroup"
+                    ]
+                  },
+                  "MainLambdaVersionyYTw9GcIIHnqKF2IvIqNwWCdAyC8qizeGcHKQo3vXBM": {
+                    "Type": "AWS::Lambda::Version",
+                    "DeletionPolicy": "Retain",
+                    "Properties": {
+                      "FunctionName": {
+                        "Ref": "MainLambdaFunction"
+                      },
+                      "CodeSha256": "Qc0EaH16ulDuoCJFtAVFGXnv+C+FVgb+jRoQJ5mLrl0="
+                    }
+                  },
+                  "ApiGatewayRestApi": {
+                    "Type": "AWS::ApiGateway::RestApi",
+                    "Properties": {
+                      "Name": "dev-vanpd-TestNest1",
+                      "EndpointConfiguration": {
+                        "Types": [
+                          "EDGE"
+                        ]
+                      },
+                      "Policy": ""
+                    }
+                  },
+                  "ApiGatewayResourceProxyVar": {
+                    "Type": "AWS::ApiGateway::Resource",
+                    "Properties": {
+                      "ParentId": {
+                        "Fn::GetAtt": [
+                          "ApiGatewayRestApi",
+                          "RootResourceId"
+                        ]
+                      },
+                      "PathPart": "{proxy+}",
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      }
+                    }
+                  },
+                  "ApiGatewayMethodOptions": {
+                    "Type": "AWS::ApiGateway::Method",
+                    "Properties": {
+                      "AuthorizationType": "NONE",
+                      "HttpMethod": "OPTIONS",
+                      "MethodResponses": [
+                        {
+                          "StatusCode": "200",
+                          "ResponseParameters": {
+                            "method.response.header.Access-Control-Allow-Origin": true,
+                            "method.response.header.Access-Control-Allow-Headers": true,
+                            "method.response.header.Access-Control-Allow-Methods": true
+                          },
+                          "ResponseModels": {}
+                        }
+                      ],
+                      "RequestParameters": {},
+                      "Integration": {
+                        "Type": "MOCK",
+                        "RequestTemplates": {
+                          "application/json": "{statusCode:200}"
+                        },
+                        "ContentHandling": "CONVERT_TO_TEXT",
+                        "IntegrationResponses": [
+                          {
+                            "StatusCode": "200",
+                            "ResponseParameters": {
+                              "method.response.header.Access-Control-Allow-Origin": "'*'",
+                              "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+                            },
+                            "ResponseTemplates": {
+                              "application/json": ""
+                            }
+                          }
+                        ]
+                      },
+                      "ResourceId": {
+                        "Fn::GetAtt": [
+                          "ApiGatewayRestApi",
+                          "RootResourceId"
+                        ]
+                      },
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      }
+                    }
+                  },
+                  "ApiGatewayMethodProxyVarOptions": {
+                    "Type": "AWS::ApiGateway::Method",
+                    "Properties": {
+                      "AuthorizationType": "NONE",
+                      "HttpMethod": "OPTIONS",
+                      "MethodResponses": [
+                        {
+                          "StatusCode": "200",
+                          "ResponseParameters": {
+                            "method.response.header.Access-Control-Allow-Origin": true,
+                            "method.response.header.Access-Control-Allow-Headers": true,
+                            "method.response.header.Access-Control-Allow-Methods": true
+                          },
+                          "ResponseModels": {}
+                        }
+                      ],
+                      "RequestParameters": {},
+                      "Integration": {
+                        "Type": "MOCK",
+                        "RequestTemplates": {
+                          "application/json": "{statusCode:200}"
+                        },
+                        "ContentHandling": "CONVERT_TO_TEXT",
+                        "IntegrationResponses": [
+                          {
+                            "StatusCode": "200",
+                            "ResponseParameters": {
+                              "method.response.header.Access-Control-Allow-Origin": "'*'",
+                              "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+                            },
+                            "ResponseTemplates": {
+                              "application/json": ""
+                            }
+                          }
+                        ]
+                      },
+                      "ResourceId": {
+                        "Ref": "ApiGatewayResourceProxyVar"
+                      },
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      }
+                    }
+                  },
+                  "ApiGatewayMethodAny": {
+                    "Type": "AWS::ApiGateway::Method",
+                    "Properties": {
+                      "HttpMethod": "ANY",
+                      "RequestParameters": {},
+                      "ResourceId": {
+                        "Fn::GetAtt": [
+                          "ApiGatewayRestApi",
+                          "RootResourceId"
+                        ]
+                      },
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "ApiKeyRequired": "<REDACTED>",
+                      "AuthorizationType": "NONE",
+                      "Integration": {
+                        "IntegrationHttpMethod": "POST",
+                        "Type": "AWS_PROXY",
+                        "Uri": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":apigateway:",
+                              {
+                                "Ref": "AWS::Region"
+                              },
+                              ":lambda:path/2015-03-31/functions/",
+                              {
+                                "Fn::GetAtt": [
+                                  "MainLambdaFunction",
+                                  "Arn"
+                                ]
+                              },
+                              "/invocations"
+                            ]
+                          ]
+                        }
+                      },
+                      "MethodResponses": []
+                    },
+                    "DependsOn": [
+                      "MainLambdaPermissionApiGateway"
+                    ]
+                  },
+                  "ApiGatewayMethodProxyVarAny": {
+                    "Type": "AWS::ApiGateway::Method",
+                    "Properties": {
+                      "HttpMethod": "ANY",
+                      "RequestParameters": {},
+                      "ResourceId": {
+                        "Ref": "ApiGatewayResourceProxyVar"
+                      },
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "ApiKeyRequired": "<REDACTED>",
+                      "AuthorizationType": "NONE",
+                      "Integration": {
+                        "IntegrationHttpMethod": "POST",
+                        "Type": "AWS_PROXY",
+                        "Uri": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":apigateway:",
+                              {
+                                "Ref": "AWS::Region"
+                              },
+                              ":lambda:path/2015-03-31/functions/",
+                              {
+                                "Fn::GetAtt": [
+                                  "MainLambdaFunction",
+                                  "Arn"
+                                ]
+                              },
+                              "/invocations"
+                            ]
+                          ]
+                        }
+                      },
+                      "MethodResponses": []
+                    },
+                    "DependsOn": [
+                      "MainLambdaPermissionApiGateway"
+                    ]
+                  },
+                  "ApiGatewayDeployment1733427510370": {
+                    "Type": "AWS::ApiGateway::Deployment",
+                    "Properties": {
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "StageName": "dev"
+                    },
+                    "DependsOn": [
+                      "ApiGatewayMethodOptions",
+                      "ApiGatewayMethodProxyVarOptions",
+                      "ApiGatewayMethodAny",
+                      "ApiGatewayMethodProxyVarAny"
+                    ]
+                  },
+                  "MainLambdaPermissionApiGateway": {
+                    "Type": "AWS::Lambda::Permission",
+                    "Properties": {
+                      "FunctionName": {
+                        "Fn::GetAtt": [
+                          "MainLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "Action": "lambda:InvokeFunction",
+                      "Principal": "apigateway.amazonaws.com",
+                      "SourceArn": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":execute-api:",
+                            {
+                              "Ref": "AWS::Region"
+                            },
+                            ":",
+                            {
+                              "Ref": "AWS::AccountId"
+                            },
+                            ":",
+                            {
+                              "Ref": "ApiGatewayRestApi"
+                            },
+                            "/*/*"
+                          ]
+                        ]
+                      }
+                    }
+                  }
+                },
+                "Outputs": {
+                  "ServerlessDeploymentBucketName": {
+                    "Value": "serverless-framework-deployments-ap-northeast-1-6eac5d24-5572",
+                    "Export": {
+                      "Name": "sls-vanpd-TestNest1-dev-ServerlessDeploymentBucketName"
+                    }
+                  },
+                  "MainLambdaFunctionQualifiedArn": {
+                    "Description": "Current Lambda function version",
+                    "Value": {
+                      "Ref": "MainLambdaVersionyYTw9GcIIHnqKF2IvIqNwWCdAyC8qizeGcHKQo3vXBM"
+                    },
+                    "Export": {
+                      "Name": "sls-vanpd-TestNest1-dev-MainLambdaFunctionQualifiedArn"
+                    }
+                  },
+                  "ServiceEndpoint": {
+                    "Description": "URL of the service endpoint",
+                    "Value": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "https://",
+                          {
+                            "Ref": "ApiGatewayRestApi"
+                          },
+                          ".execute-api.",
+                          {
+                            "Ref": "AWS::Region"
+                          },
+                          ".",
+                          {
+                            "Ref": "AWS::URLSuffix"
+                          },
+                          "/dev"
+                        ]
+                      ]
+                    },
+                    "Export": {
+                      "Name": "sls-vanpd-TestNest1-dev-ServiceEndpoint"
+                    }
+                  },
+                  "ApiGatewayUrl": {
+                    "Description": "URL of the API Gateway",
+                    "Value": {
+                      "Fn::Sub": "https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/"
+                    }
+                  }
+                }
+              },
+              "vpc": {}
+            },
+            "functions": {
+              "main": {
+                "handler": "dist/src/lambda.handler",
+                "memorySize": 512,
+                "timeout": 10,
+                "events": [
+                  {
+                    "http": {
+                      "method": "any",
+                      "path": "",
+                      "cors": {
+                        "origin": "*",
+                        "methods": [
+                          "OPTIONS",
+                          "ANY"
+                        ],
+                        "headers": [
+                          "Content-Type",
+                          "X-Amz-Date",
+                          "Authorization",
+                          "X-Api-Key",
+                          "X-Amz-Security-Token",
+                          "X-Amz-User-Agent",
+                          "X-Amzn-Trace-Id"
+                        ],
+                        "allowCredentials": "<REDACTED>"
+                      },
+                      "integration": "AWS_PROXY"
+                    }
+                  },
+                  {
+                    "http": {
+                      "method": "any",
+                      "path": "{proxy+}",
+                      "cors": {
+                        "origin": "*",
+                        "methods": [
+                          "OPTIONS",
+                          "ANY"
+                        ],
+                        "headers": [
+                          "Content-Type",
+                          "X-Amz-Date",
+                          "Authorization",
+                          "X-Api-Key",
+                          "X-Amz-Security-Token",
+                          "X-Amz-User-Agent",
+                          "X-Amzn-Trace-Id"
+                        ],
+                        "allowCredentials": "<REDACTED>"
+                      },
+                      "integration": "AWS_PROXY"
+                    }
+                  }
+                ],
+                "name": "vanpd-TestNest1-dev-main",
+                "package": {},
+                "memory": 512,
+                "runtime": "nodejs18.x",
+                "vpc": {},
+                "versionLogicalId": "MainLambdaVersionyYTw9GcIIHnqKF2IvIqNwWCdAyC8qizeGcHKQo3vXBM"
+              }
+            },
+            "resources": {
+              "Outputs": {
+                "ApiGatewayUrl": {
+                  "Description": "URL of the API Gateway",
+                  "Value": {
+                    "Fn::Sub": "https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/"
+                  }
+                }
+              },
+              "Resources": {}
+            }
+          },
+          "configFileDirPath": "E:\\Test\\test-nest1",
+          "config": {
+            "type": "self"
+          },
+          "options": {},
+          "stage": "dev",
+          "dashboard": null,
+          "logger": {
+            "namespace": "s:core:resolver:self",
+            "prefix": null,
+            "prefixColor": null
+          },
+          "_credentialsPromise": "<REDACTED>"
+        },
+        "resolvers": {}
+      },
+      "aws": {
+        "instance": {
+          "credentials": "<REDACTED>",
+          "serviceConfigFile": {
+            "service": "vanpd-TestNest1",
+            "provider": {
+              "name": "aws",
+              "runtime": "nodejs18.x",
+              "region": "ap-northeast-1",
+              "timeout": 10,
+              "memorySize": 512,
+              "stage": "dev",
+              "environment": {
+                "TABLE_NAMES": "vantest-tasks,vantest-users"
+              },
+              "iamRoleStatements": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:CreateTable",
+                    "dynamodb:PutItem",
+                    "dynamodb:GetItem",
+                    "dynamodb:UpdateItem",
+                    "dynamodb:DescribeTable",
+                    "dynamodb:Query",
+                    "dynamodb:Scan",
+                    "dynamodb:DeleteItem"
+                  ],
+                  "Resource": "arn:aws:dynamodb:ap-northeast-1:727646477609:table/*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "apigateway:GET",
+                    "apigateway:POST",
+                    "apigateway:PUT",
+                    "apigateway:DELETE"
+                  ],
+                  "Resource": "arn:aws:apigateway:ap-northeast-1::/*"
+                }
+              ],
+              "versionFunctions": true,
+              "compiledCloudFormationTemplate": {
+                "AWSTemplateFormatVersion": "2010-09-09",
+                "Description": "The AWS CloudFormation template for this Serverless application",
+                "Resources": {
+                  "MainLogGroup": {
+                    "Type": "AWS::Logs::LogGroup",
+                    "Properties": {
+                      "LogGroupName": "/aws/lambda/vanpd-TestNest1-dev-main"
+                    }
+                  },
+                  "IamRoleLambdaExecution": {
+                    "Type": "AWS::IAM::Role",
+                    "Properties": {
+                      "AssumeRolePolicyDocument": {
+                        "Version": "2012-10-17",
+                        "Statement": [
+                          {
+                            "Effect": "Allow",
+                            "Principal": {
+                              "Service": [
+                                "lambda.amazonaws.com"
+                              ]
+                            },
+                            "Action": [
+                              "sts:AssumeRole"
+                            ]
+                          }
+                        ]
+                      },
+                      "Policies": [
+                        {
+                          "PolicyName": {
+                            "Fn::Join": [
+                              "-",
+                              [
+                                "vanpd-TestNest1",
+                                "dev",
+                                "lambda"
+                              ]
+                            ]
+                          },
+                          "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                              {
+                                "Effect": "Allow",
+                                "Action": [
+                                  "logs:CreateLogStream",
+                                  "logs:CreateLogGroup",
+                                  "logs:TagResource"
+                                ],
+                                "Resource": [
+                                  {
+                                    "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/vanpd-TestNest1-dev*:*"
+                                  }
+                                ]
+                              },
+                              {
+                                "Effect": "Allow",
+                                "Action": [
+                                  "logs:PutLogEvents"
+                                ],
+                                "Resource": [
+                                  {
+                                    "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/vanpd-TestNest1-dev*:*:*"
+                                  }
+                                ]
+                              },
+                              {
+                                "Effect": "Allow",
+                                "Action": [
+                                  "dynamodb:CreateTable",
+                                  "dynamodb:PutItem",
+                                  "dynamodb:GetItem",
+                                  "dynamodb:UpdateItem",
+                                  "dynamodb:DescribeTable",
+                                  "dynamodb:Query",
+                                  "dynamodb:Scan",
+                                  "dynamodb:DeleteItem"
+                                ],
+                                "Resource": "arn:aws:dynamodb:ap-northeast-1:727646477609:table/*"
+                              },
+                              {
+                                "Effect": "Allow",
+                                "Action": [
+                                  "apigateway:GET",
+                                  "apigateway:POST",
+                                  "apigateway:PUT",
+                                  "apigateway:DELETE"
+                                ],
+                                "Resource": "arn:aws:apigateway:ap-northeast-1::/*"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "Path": "/",
+                      "RoleName": {
+                        "Fn::Join": [
+                          "-",
+                          [
+                            "vanpd-TestNest1",
+                            "dev",
+                            {
+                              "Ref": "AWS::Region"
+                            },
+                            "lambdaRole"
+                          ]
+                        ]
+                      }
+                    }
+                  },
+                  "MainLambdaFunction": {
+                    "Type": "AWS::Lambda::Function",
+                    "Properties": {
+                      "Code": {
+                        "S3Bucket": "serverless-framework-deployments-ap-northeast-1-6eac5d24-5572",
+                        "S3Key": "serverless/vanpd-TestNest1/dev/1733427535137-2024-12-05T19:38:55.137Z/vanpd-TestNest1.zip"
+                      },
+                      "Handler": "dist/src/lambda.handler",
+                      "Runtime": "nodejs18.x",
+                      "FunctionName": "vanpd-TestNest1-dev-main",
+                      "MemorySize": 512,
+                      "Timeout": 10,
+                      "Environment": {
+                        "Variables": {
+                          "TABLE_NAMES": "vantest-tasks,vantest-users"
+                        }
+                      },
+                      "Role": {
+                        "Fn::GetAtt": [
+                          "IamRoleLambdaExecution",
+                          "Arn"
+                        ]
+                      }
+                    },
+                    "DependsOn": [
+                      "MainLogGroup"
+                    ]
+                  },
+                  "MainLambdaVersionyYTw9GcIIHnqKF2IvIqNwWCdAyC8qizeGcHKQo3vXBM": {
+                    "Type": "AWS::Lambda::Version",
+                    "DeletionPolicy": "Retain",
+                    "Properties": {
+                      "FunctionName": {
+                        "Ref": "MainLambdaFunction"
+                      },
+                      "CodeSha256": "Qc0EaH16ulDuoCJFtAVFGXnv+C+FVgb+jRoQJ5mLrl0="
+                    }
+                  },
+                  "ApiGatewayRestApi": {
+                    "Type": "AWS::ApiGateway::RestApi",
+                    "Properties": {
+                      "Name": "dev-vanpd-TestNest1",
+                      "EndpointConfiguration": {
+                        "Types": [
+                          "EDGE"
+                        ]
+                      },
+                      "Policy": ""
+                    }
+                  },
+                  "ApiGatewayResourceProxyVar": {
+                    "Type": "AWS::ApiGateway::Resource",
+                    "Properties": {
+                      "ParentId": {
+                        "Fn::GetAtt": [
+                          "ApiGatewayRestApi",
+                          "RootResourceId"
+                        ]
+                      },
+                      "PathPart": "{proxy+}",
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      }
+                    }
+                  },
+                  "ApiGatewayMethodOptions": {
+                    "Type": "AWS::ApiGateway::Method",
+                    "Properties": {
+                      "AuthorizationType": "NONE",
+                      "HttpMethod": "OPTIONS",
+                      "MethodResponses": [
+                        {
+                          "StatusCode": "200",
+                          "ResponseParameters": {
+                            "method.response.header.Access-Control-Allow-Origin": true,
+                            "method.response.header.Access-Control-Allow-Headers": true,
+                            "method.response.header.Access-Control-Allow-Methods": true
+                          },
+                          "ResponseModels": {}
+                        }
+                      ],
+                      "RequestParameters": {},
+                      "Integration": {
+                        "Type": "MOCK",
+                        "RequestTemplates": {
+                          "application/json": "{statusCode:200}"
+                        },
+                        "ContentHandling": "CONVERT_TO_TEXT",
+                        "IntegrationResponses": [
+                          {
+                            "StatusCode": "200",
+                            "ResponseParameters": {
+                              "method.response.header.Access-Control-Allow-Origin": "'*'",
+                              "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+                            },
+                            "ResponseTemplates": {
+                              "application/json": ""
+                            }
+                          }
+                        ]
+                      },
+                      "ResourceId": {
+                        "Fn::GetAtt": [
+                          "ApiGatewayRestApi",
+                          "RootResourceId"
+                        ]
+                      },
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      }
+                    }
+                  },
+                  "ApiGatewayMethodProxyVarOptions": {
+                    "Type": "AWS::ApiGateway::Method",
+                    "Properties": {
+                      "AuthorizationType": "NONE",
+                      "HttpMethod": "OPTIONS",
+                      "MethodResponses": [
+                        {
+                          "StatusCode": "200",
+                          "ResponseParameters": {
+                            "method.response.header.Access-Control-Allow-Origin": true,
+                            "method.response.header.Access-Control-Allow-Headers": true,
+                            "method.response.header.Access-Control-Allow-Methods": true
+                          },
+                          "ResponseModels": {}
+                        }
+                      ],
+                      "RequestParameters": {},
+                      "Integration": {
+                        "Type": "MOCK",
+                        "RequestTemplates": {
+                          "application/json": "{statusCode:200}"
+                        },
+                        "ContentHandling": "CONVERT_TO_TEXT",
+                        "IntegrationResponses": [
+                          {
+                            "StatusCode": "200",
+                            "ResponseParameters": {
+                              "method.response.header.Access-Control-Allow-Origin": "'*'",
+                              "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+                            },
+                            "ResponseTemplates": {
+                              "application/json": ""
+                            }
+                          }
+                        ]
+                      },
+                      "ResourceId": {
+                        "Ref": "ApiGatewayResourceProxyVar"
+                      },
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      }
+                    }
+                  },
+                  "ApiGatewayMethodAny": {
+                    "Type": "AWS::ApiGateway::Method",
+                    "Properties": {
+                      "HttpMethod": "ANY",
+                      "RequestParameters": {},
+                      "ResourceId": {
+                        "Fn::GetAtt": [
+                          "ApiGatewayRestApi",
+                          "RootResourceId"
+                        ]
+                      },
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "ApiKeyRequired": "<REDACTED>",
+                      "AuthorizationType": "NONE",
+                      "Integration": {
+                        "IntegrationHttpMethod": "POST",
+                        "Type": "AWS_PROXY",
+                        "Uri": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":apigateway:",
+                              {
+                                "Ref": "AWS::Region"
+                              },
+                              ":lambda:path/2015-03-31/functions/",
+                              {
+                                "Fn::GetAtt": [
+                                  "MainLambdaFunction",
+                                  "Arn"
+                                ]
+                              },
+                              "/invocations"
+                            ]
+                          ]
+                        }
+                      },
+                      "MethodResponses": []
+                    },
+                    "DependsOn": [
+                      "MainLambdaPermissionApiGateway"
+                    ]
+                  },
+                  "ApiGatewayMethodProxyVarAny": {
+                    "Type": "AWS::ApiGateway::Method",
+                    "Properties": {
+                      "HttpMethod": "ANY",
+                      "RequestParameters": {},
+                      "ResourceId": {
+                        "Ref": "ApiGatewayResourceProxyVar"
+                      },
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "ApiKeyRequired": "<REDACTED>",
+                      "AuthorizationType": "NONE",
+                      "Integration": {
+                        "IntegrationHttpMethod": "POST",
+                        "Type": "AWS_PROXY",
+                        "Uri": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":apigateway:",
+                              {
+                                "Ref": "AWS::Region"
+                              },
+                              ":lambda:path/2015-03-31/functions/",
+                              {
+                                "Fn::GetAtt": [
+                                  "MainLambdaFunction",
+                                  "Arn"
+                                ]
+                              },
+                              "/invocations"
+                            ]
+                          ]
+                        }
+                      },
+                      "MethodResponses": []
+                    },
+                    "DependsOn": [
+                      "MainLambdaPermissionApiGateway"
+                    ]
+                  },
+                  "ApiGatewayDeployment1733427510370": {
+                    "Type": "AWS::ApiGateway::Deployment",
+                    "Properties": {
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "StageName": "dev"
+                    },
+                    "DependsOn": [
+                      "ApiGatewayMethodOptions",
+                      "ApiGatewayMethodProxyVarOptions",
+                      "ApiGatewayMethodAny",
+                      "ApiGatewayMethodProxyVarAny"
+                    ]
+                  },
+                  "MainLambdaPermissionApiGateway": {
+                    "Type": "AWS::Lambda::Permission",
+                    "Properties": {
+                      "FunctionName": {
+                        "Fn::GetAtt": [
+                          "MainLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "Action": "lambda:InvokeFunction",
+                      "Principal": "apigateway.amazonaws.com",
+                      "SourceArn": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":execute-api:",
+                            {
+                              "Ref": "AWS::Region"
+                            },
+                            ":",
+                            {
+                              "Ref": "AWS::AccountId"
+                            },
+                            ":",
+                            {
+                              "Ref": "ApiGatewayRestApi"
+                            },
+                            "/*/*"
+                          ]
+                        ]
+                      }
+                    }
+                  }
+                },
+                "Outputs": {
+                  "ServerlessDeploymentBucketName": {
+                    "Value": "serverless-framework-deployments-ap-northeast-1-6eac5d24-5572",
+                    "Export": {
+                      "Name": "sls-vanpd-TestNest1-dev-ServerlessDeploymentBucketName"
+                    }
+                  },
+                  "MainLambdaFunctionQualifiedArn": {
+                    "Description": "Current Lambda function version",
+                    "Value": {
+                      "Ref": "MainLambdaVersionyYTw9GcIIHnqKF2IvIqNwWCdAyC8qizeGcHKQo3vXBM"
+                    },
+                    "Export": {
+                      "Name": "sls-vanpd-TestNest1-dev-MainLambdaFunctionQualifiedArn"
+                    }
+                  },
+                  "ServiceEndpoint": {
+                    "Description": "URL of the service endpoint",
+                    "Value": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "https://",
+                          {
+                            "Ref": "ApiGatewayRestApi"
+                          },
+                          ".execute-api.",
+                          {
+                            "Ref": "AWS::Region"
+                          },
+                          ".",
+                          {
+                            "Ref": "AWS::URLSuffix"
+                          },
+                          "/dev"
+                        ]
+                      ]
+                    },
+                    "Export": {
+                      "Name": "sls-vanpd-TestNest1-dev-ServiceEndpoint"
+                    }
+                  },
+                  "ApiGatewayUrl": {
+                    "Description": "URL of the API Gateway",
+                    "Value": {
+                      "Fn::Sub": "https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/"
+                    }
+                  }
+                }
+              },
+              "vpc": {}
+            },
+            "functions": {
+              "main": {
+                "handler": "dist/src/lambda.handler",
+                "memorySize": 512,
+                "timeout": 10,
+                "events": [
+                  {
+                    "http": {
+                      "method": "any",
+                      "path": "",
+                      "cors": {
+                        "origin": "*",
+                        "methods": [
+                          "OPTIONS",
+                          "ANY"
+                        ],
+                        "headers": [
+                          "Content-Type",
+                          "X-Amz-Date",
+                          "Authorization",
+                          "X-Api-Key",
+                          "X-Amz-Security-Token",
+                          "X-Amz-User-Agent",
+                          "X-Amzn-Trace-Id"
+                        ],
+                        "allowCredentials": "<REDACTED>"
+                      },
+                      "integration": "AWS_PROXY"
+                    }
+                  },
+                  {
+                    "http": {
+                      "method": "any",
+                      "path": "{proxy+}",
+                      "cors": {
+                        "origin": "*",
+                        "methods": [
+                          "OPTIONS",
+                          "ANY"
+                        ],
+                        "headers": [
+                          "Content-Type",
+                          "X-Amz-Date",
+                          "Authorization",
+                          "X-Api-Key",
+                          "X-Amz-Security-Token",
+                          "X-Amz-User-Agent",
+                          "X-Amzn-Trace-Id"
+                        ],
+                        "allowCredentials": "<REDACTED>"
+                      },
+                      "integration": "AWS_PROXY"
+                    }
+                  }
+                ],
+                "name": "vanpd-TestNest1-dev-main",
+                "package": {},
+                "memory": 512,
+                "runtime": "nodejs18.x",
+                "vpc": {},
+                "versionLogicalId": "MainLambdaVersionyYTw9GcIIHnqKF2IvIqNwWCdAyC8qizeGcHKQo3vXBM"
+              }
+            },
+            "resources": {
+              "Outputs": {
+                "ApiGatewayUrl": {
+                  "Description": "URL of the API Gateway",
+                  "Value": {
+                    "Fn::Sub": "https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/"
+                  }
+                }
+              },
+              "Resources": {}
+            }
+          },
+          "configFileDirPath": "E:\\Test\\test-nest1",
+          "config": {
+            "type": "aws"
+          },
+          "options": {},
+          "stage": "dev",
+          "dashboard": null,
+          "logger": {
+            "namespace": "s:core:resolver:aws",
+            "prefix": null,
+            "prefixColor": null
+          },
+          "_credentialsPromise": "<REDACTED>",
+          "isDefaultConfig": true
+        },
+        "resolvers": {}
+      },
+      "sls": {
+        "instance": {
+          "credentials": "<REDACTED>",
+          "serviceConfigFile": {
+            "service": "vanpd-TestNest1",
+            "provider": {
+              "name": "aws",
+              "runtime": "nodejs18.x",
+              "region": "ap-northeast-1",
+              "timeout": 10,
+              "memorySize": 512,
+              "stage": "dev",
+              "environment": {
+                "TABLE_NAMES": "vantest-tasks,vantest-users"
+              },
+              "iamRoleStatements": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:CreateTable",
+                    "dynamodb:PutItem",
+                    "dynamodb:GetItem",
+                    "dynamodb:UpdateItem",
+                    "dynamodb:DescribeTable",
+                    "dynamodb:Query",
+                    "dynamodb:Scan",
+                    "dynamodb:DeleteItem"
+                  ],
+                  "Resource": "arn:aws:dynamodb:ap-northeast-1:727646477609:table/*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "apigateway:GET",
+                    "apigateway:POST",
+                    "apigateway:PUT",
+                    "apigateway:DELETE"
+                  ],
+                  "Resource": "arn:aws:apigateway:ap-northeast-1::/*"
+                }
+              ],
+              "versionFunctions": true,
+              "compiledCloudFormationTemplate": {
+                "AWSTemplateFormatVersion": "2010-09-09",
+                "Description": "The AWS CloudFormation template for this Serverless application",
+                "Resources": {
+                  "MainLogGroup": {
+                    "Type": "AWS::Logs::LogGroup",
+                    "Properties": {
+                      "LogGroupName": "/aws/lambda/vanpd-TestNest1-dev-main"
+                    }
+                  },
+                  "IamRoleLambdaExecution": {
+                    "Type": "AWS::IAM::Role",
+                    "Properties": {
+                      "AssumeRolePolicyDocument": {
+                        "Version": "2012-10-17",
+                        "Statement": [
+                          {
+                            "Effect": "Allow",
+                            "Principal": {
+                              "Service": [
+                                "lambda.amazonaws.com"
+                              ]
+                            },
+                            "Action": [
+                              "sts:AssumeRole"
+                            ]
+                          }
+                        ]
+                      },
+                      "Policies": [
+                        {
+                          "PolicyName": {
+                            "Fn::Join": [
+                              "-",
+                              [
+                                "vanpd-TestNest1",
+                                "dev",
+                                "lambda"
+                              ]
+                            ]
+                          },
+                          "PolicyDocument": {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                              {
+                                "Effect": "Allow",
+                                "Action": [
+                                  "logs:CreateLogStream",
+                                  "logs:CreateLogGroup",
+                                  "logs:TagResource"
+                                ],
+                                "Resource": [
+                                  {
+                                    "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/vanpd-TestNest1-dev*:*"
+                                  }
+                                ]
+                              },
+                              {
+                                "Effect": "Allow",
+                                "Action": [
+                                  "logs:PutLogEvents"
+                                ],
+                                "Resource": [
+                                  {
+                                    "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/vanpd-TestNest1-dev*:*:*"
+                                  }
+                                ]
+                              },
+                              {
+                                "Effect": "Allow",
+                                "Action": [
+                                  "dynamodb:CreateTable",
+                                  "dynamodb:PutItem",
+                                  "dynamodb:GetItem",
+                                  "dynamodb:UpdateItem",
+                                  "dynamodb:DescribeTable",
+                                  "dynamodb:Query",
+                                  "dynamodb:Scan",
+                                  "dynamodb:DeleteItem"
+                                ],
+                                "Resource": "arn:aws:dynamodb:ap-northeast-1:727646477609:table/*"
+                              },
+                              {
+                                "Effect": "Allow",
+                                "Action": [
+                                  "apigateway:GET",
+                                  "apigateway:POST",
+                                  "apigateway:PUT",
+                                  "apigateway:DELETE"
+                                ],
+                                "Resource": "arn:aws:apigateway:ap-northeast-1::/*"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "Path": "/",
+                      "RoleName": {
+                        "Fn::Join": [
+                          "-",
+                          [
+                            "vanpd-TestNest1",
+                            "dev",
+                            {
+                              "Ref": "AWS::Region"
+                            },
+                            "lambdaRole"
+                          ]
+                        ]
+                      }
+                    }
+                  },
+                  "MainLambdaFunction": {
+                    "Type": "AWS::Lambda::Function",
+                    "Properties": {
+                      "Code": {
+                        "S3Bucket": "serverless-framework-deployments-ap-northeast-1-6eac5d24-5572",
+                        "S3Key": "serverless/vanpd-TestNest1/dev/1733427535137-2024-12-05T19:38:55.137Z/vanpd-TestNest1.zip"
+                      },
+                      "Handler": "dist/src/lambda.handler",
+                      "Runtime": "nodejs18.x",
+                      "FunctionName": "vanpd-TestNest1-dev-main",
+                      "MemorySize": 512,
+                      "Timeout": 10,
+                      "Environment": {
+                        "Variables": {
+                          "TABLE_NAMES": "vantest-tasks,vantest-users"
+                        }
+                      },
+                      "Role": {
+                        "Fn::GetAtt": [
+                          "IamRoleLambdaExecution",
+                          "Arn"
+                        ]
+                      }
+                    },
+                    "DependsOn": [
+                      "MainLogGroup"
+                    ]
+                  },
+                  "MainLambdaVersionyYTw9GcIIHnqKF2IvIqNwWCdAyC8qizeGcHKQo3vXBM": {
+                    "Type": "AWS::Lambda::Version",
+                    "DeletionPolicy": "Retain",
+                    "Properties": {
+                      "FunctionName": {
+                        "Ref": "MainLambdaFunction"
+                      },
+                      "CodeSha256": "Qc0EaH16ulDuoCJFtAVFGXnv+C+FVgb+jRoQJ5mLrl0="
+                    }
+                  },
+                  "ApiGatewayRestApi": {
+                    "Type": "AWS::ApiGateway::RestApi",
+                    "Properties": {
+                      "Name": "dev-vanpd-TestNest1",
+                      "EndpointConfiguration": {
+                        "Types": [
+                          "EDGE"
+                        ]
+                      },
+                      "Policy": ""
+                    }
+                  },
+                  "ApiGatewayResourceProxyVar": {
+                    "Type": "AWS::ApiGateway::Resource",
+                    "Properties": {
+                      "ParentId": {
+                        "Fn::GetAtt": [
+                          "ApiGatewayRestApi",
+                          "RootResourceId"
+                        ]
+                      },
+                      "PathPart": "{proxy+}",
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      }
+                    }
+                  },
+                  "ApiGatewayMethodOptions": {
+                    "Type": "AWS::ApiGateway::Method",
+                    "Properties": {
+                      "AuthorizationType": "NONE",
+                      "HttpMethod": "OPTIONS",
+                      "MethodResponses": [
+                        {
+                          "StatusCode": "200",
+                          "ResponseParameters": {
+                            "method.response.header.Access-Control-Allow-Origin": true,
+                            "method.response.header.Access-Control-Allow-Headers": true,
+                            "method.response.header.Access-Control-Allow-Methods": true
+                          },
+                          "ResponseModels": {}
+                        }
+                      ],
+                      "RequestParameters": {},
+                      "Integration": {
+                        "Type": "MOCK",
+                        "RequestTemplates": {
+                          "application/json": "{statusCode:200}"
+                        },
+                        "ContentHandling": "CONVERT_TO_TEXT",
+                        "IntegrationResponses": [
+                          {
+                            "StatusCode": "200",
+                            "ResponseParameters": {
+                              "method.response.header.Access-Control-Allow-Origin": "'*'",
+                              "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+                            },
+                            "ResponseTemplates": {
+                              "application/json": ""
+                            }
+                          }
+                        ]
+                      },
+                      "ResourceId": {
+                        "Fn::GetAtt": [
+                          "ApiGatewayRestApi",
+                          "RootResourceId"
+                        ]
+                      },
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      }
+                    }
+                  },
+                  "ApiGatewayMethodProxyVarOptions": {
+                    "Type": "AWS::ApiGateway::Method",
+                    "Properties": {
+                      "AuthorizationType": "NONE",
+                      "HttpMethod": "OPTIONS",
+                      "MethodResponses": [
+                        {
+                          "StatusCode": "200",
+                          "ResponseParameters": {
+                            "method.response.header.Access-Control-Allow-Origin": true,
+                            "method.response.header.Access-Control-Allow-Headers": true,
+                            "method.response.header.Access-Control-Allow-Methods": true
+                          },
+                          "ResponseModels": {}
+                        }
+                      ],
+                      "RequestParameters": {},
+                      "Integration": {
+                        "Type": "MOCK",
+                        "RequestTemplates": {
+                          "application/json": "{statusCode:200}"
+                        },
+                        "ContentHandling": "CONVERT_TO_TEXT",
+                        "IntegrationResponses": [
+                          {
+                            "StatusCode": "200",
+                            "ResponseParameters": {
+                              "method.response.header.Access-Control-Allow-Origin": "'*'",
+                              "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                              "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+                            },
+                            "ResponseTemplates": {
+                              "application/json": ""
+                            }
+                          }
+                        ]
+                      },
+                      "ResourceId": {
+                        "Ref": "ApiGatewayResourceProxyVar"
+                      },
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      }
+                    }
+                  },
+                  "ApiGatewayMethodAny": {
+                    "Type": "AWS::ApiGateway::Method",
+                    "Properties": {
+                      "HttpMethod": "ANY",
+                      "RequestParameters": {},
+                      "ResourceId": {
+                        "Fn::GetAtt": [
+                          "ApiGatewayRestApi",
+                          "RootResourceId"
+                        ]
+                      },
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "ApiKeyRequired": "<REDACTED>",
+                      "AuthorizationType": "NONE",
+                      "Integration": {
+                        "IntegrationHttpMethod": "POST",
+                        "Type": "AWS_PROXY",
+                        "Uri": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":apigateway:",
+                              {
+                                "Ref": "AWS::Region"
+                              },
+                              ":lambda:path/2015-03-31/functions/",
+                              {
+                                "Fn::GetAtt": [
+                                  "MainLambdaFunction",
+                                  "Arn"
+                                ]
+                              },
+                              "/invocations"
+                            ]
+                          ]
+                        }
+                      },
+                      "MethodResponses": []
+                    },
+                    "DependsOn": [
+                      "MainLambdaPermissionApiGateway"
+                    ]
+                  },
+                  "ApiGatewayMethodProxyVarAny": {
+                    "Type": "AWS::ApiGateway::Method",
+                    "Properties": {
+                      "HttpMethod": "ANY",
+                      "RequestParameters": {},
+                      "ResourceId": {
+                        "Ref": "ApiGatewayResourceProxyVar"
+                      },
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "ApiKeyRequired": "<REDACTED>",
+                      "AuthorizationType": "NONE",
+                      "Integration": {
+                        "IntegrationHttpMethod": "POST",
+                        "Type": "AWS_PROXY",
+                        "Uri": {
+                          "Fn::Join": [
+                            "",
+                            [
+                              "arn:",
+                              {
+                                "Ref": "AWS::Partition"
+                              },
+                              ":apigateway:",
+                              {
+                                "Ref": "AWS::Region"
+                              },
+                              ":lambda:path/2015-03-31/functions/",
+                              {
+                                "Fn::GetAtt": [
+                                  "MainLambdaFunction",
+                                  "Arn"
+                                ]
+                              },
+                              "/invocations"
+                            ]
+                          ]
+                        }
+                      },
+                      "MethodResponses": []
+                    },
+                    "DependsOn": [
+                      "MainLambdaPermissionApiGateway"
+                    ]
+                  },
+                  "ApiGatewayDeployment1733427510370": {
+                    "Type": "AWS::ApiGateway::Deployment",
+                    "Properties": {
+                      "RestApiId": {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "StageName": "dev"
+                    },
+                    "DependsOn": [
+                      "ApiGatewayMethodOptions",
+                      "ApiGatewayMethodProxyVarOptions",
+                      "ApiGatewayMethodAny",
+                      "ApiGatewayMethodProxyVarAny"
+                    ]
+                  },
+                  "MainLambdaPermissionApiGateway": {
+                    "Type": "AWS::Lambda::Permission",
+                    "Properties": {
+                      "FunctionName": {
+                        "Fn::GetAtt": [
+                          "MainLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "Action": "lambda:InvokeFunction",
+                      "Principal": "apigateway.amazonaws.com",
+                      "SourceArn": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":execute-api:",
+                            {
+                              "Ref": "AWS::Region"
+                            },
+                            ":",
+                            {
+                              "Ref": "AWS::AccountId"
+                            },
+                            ":",
+                            {
+                              "Ref": "ApiGatewayRestApi"
+                            },
+                            "/*/*"
+                          ]
+                        ]
+                      }
+                    }
+                  }
+                },
+                "Outputs": {
+                  "ServerlessDeploymentBucketName": {
+                    "Value": "serverless-framework-deployments-ap-northeast-1-6eac5d24-5572",
+                    "Export": {
+                      "Name": "sls-vanpd-TestNest1-dev-ServerlessDeploymentBucketName"
+                    }
+                  },
+                  "MainLambdaFunctionQualifiedArn": {
+                    "Description": "Current Lambda function version",
+                    "Value": {
+                      "Ref": "MainLambdaVersionyYTw9GcIIHnqKF2IvIqNwWCdAyC8qizeGcHKQo3vXBM"
+                    },
+                    "Export": {
+                      "Name": "sls-vanpd-TestNest1-dev-MainLambdaFunctionQualifiedArn"
+                    }
+                  },
+                  "ServiceEndpoint": {
+                    "Description": "URL of the service endpoint",
+                    "Value": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "https://",
+                          {
+                            "Ref": "ApiGatewayRestApi"
+                          },
+                          ".execute-api.",
+                          {
+                            "Ref": "AWS::Region"
+                          },
+                          ".",
+                          {
+                            "Ref": "AWS::URLSuffix"
+                          },
+                          "/dev"
+                        ]
+                      ]
+                    },
+                    "Export": {
+                      "Name": "sls-vanpd-TestNest1-dev-ServiceEndpoint"
+                    }
+                  },
+                  "ApiGatewayUrl": {
+                    "Description": "URL of the API Gateway",
+                    "Value": {
+                      "Fn::Sub": "https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/"
+                    }
+                  }
+                }
+              },
+              "vpc": {}
+            },
+            "functions": {
+              "main": {
+                "handler": "dist/src/lambda.handler",
+                "memorySize": 512,
+                "timeout": 10,
+                "events": [
+                  {
+                    "http": {
+                      "method": "any",
+                      "path": "",
+                      "cors": {
+                        "origin": "*",
+                        "methods": [
+                          "OPTIONS",
+                          "ANY"
+                        ],
+                        "headers": [
+                          "Content-Type",
+                          "X-Amz-Date",
+                          "Authorization",
+                          "X-Api-Key",
+                          "X-Amz-Security-Token",
+                          "X-Amz-User-Agent",
+                          "X-Amzn-Trace-Id"
+                        ],
+                        "allowCredentials": "<REDACTED>"
+                      },
+                      "integration": "AWS_PROXY"
+                    }
+                  },
+                  {
+                    "http": {
+                      "method": "any",
+                      "path": "{proxy+}",
+                      "cors": {
+                        "origin": "*",
+                        "methods": [
+                          "OPTIONS",
+                          "ANY"
+                        ],
+                        "headers": [
+                          "Content-Type",
+                          "X-Amz-Date",
+                          "Authorization",
+                          "X-Api-Key",
+                          "X-Amz-Security-Token",
+                          "X-Amz-User-Agent",
+                          "X-Amzn-Trace-Id"
+                        ],
+                        "allowCredentials": "<REDACTED>"
+                      },
+                      "integration": "AWS_PROXY"
+                    }
+                  }
+                ],
+                "name": "vanpd-TestNest1-dev-main",
+                "package": {},
+                "memory": 512,
+                "runtime": "nodejs18.x",
+                "vpc": {},
+                "versionLogicalId": "MainLambdaVersionyYTw9GcIIHnqKF2IvIqNwWCdAyC8qizeGcHKQo3vXBM"
+              }
+            },
+            "resources": {
+              "Outputs": {
+                "ApiGatewayUrl": {
+                  "Description": "URL of the API Gateway",
+                  "Value": {
+                    "Fn::Sub": "https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/"
+                  }
+                }
+              },
+              "Resources": {}
+            }
+          },
+          "configFileDirPath": "E:\\Test\\test-nest1",
+          "config": {
+            "type": "sls"
+          },
+          "options": {},
+          "stage": "dev",
+          "dashboard": null,
+          "logger": {
+            "namespace": "s:core:resolver:sls",
+            "prefix": null,
+            "prefixColor": null
+          },
+          "_credentialsPromise": "<REDACTED>"
+        },
+        "resolvers": {}
+      }
+    },
+    "composeServiceName": null,
+    "servicePath": "E:\\Test\\test-nest1",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "vanpd-TestNest1",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs18.x",
+        "region": "ap-northeast-1",
+        "timeout": 10,
+        "memorySize": 512,
+        "stage": "dev",
+        "environment": {
+          "TABLE_NAMES": "vantest-tasks,vantest-users"
+        },
+        "iamRoleStatements": [
+          {
+            "Effect": "Allow",
+            "Action": [
+              "dynamodb:CreateTable",
+              "dynamodb:PutItem",
+              "dynamodb:GetItem",
+              "dynamodb:UpdateItem",
+              "dynamodb:DescribeTable",
+              "dynamodb:Query",
+              "dynamodb:Scan",
+              "dynamodb:DeleteItem"
+            ],
+            "Resource": "arn:aws:dynamodb:ap-northeast-1:727646477609:table/*"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "apigateway:GET",
+              "apigateway:POST",
+              "apigateway:PUT",
+              "apigateway:DELETE"
+            ],
+            "Resource": "arn:aws:apigateway:ap-northeast-1::/*"
+          }
+        ],
+        "versionFunctions": true,
+        "compiledCloudFormationTemplate": {
+          "AWSTemplateFormatVersion": "2010-09-09",
+          "Description": "The AWS CloudFormation template for this Serverless application",
+          "Resources": {
+            "MainLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/vanpd-TestNest1-dev-main"
+              }
+            },
+            "IamRoleLambdaExecution": {
+              "Type": "AWS::IAM::Role",
+              "Properties": {
+                "AssumeRolePolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Principal": {
+                        "Service": [
+                          "lambda.amazonaws.com"
+                        ]
+                      },
+                      "Action": [
+                        "sts:AssumeRole"
+                      ]
+                    }
+                  ]
+                },
+                "Policies": [
+                  {
+                    "PolicyName": {
+                      "Fn::Join": [
+                        "-",
+                        [
+                          "vanpd-TestNest1",
+                          "dev",
+                          "lambda"
+                        ]
+                      ]
+                    },
+                    "PolicyDocument": {
+                      "Version": "2012-10-17",
+                      "Statement": [
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:CreateLogStream",
+                            "logs:CreateLogGroup",
+                            "logs:TagResource"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/vanpd-TestNest1-dev*:*"
+                            }
+                          ]
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:PutLogEvents"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/vanpd-TestNest1-dev*:*:*"
+                            }
+                          ]
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "dynamodb:CreateTable",
+                            "dynamodb:PutItem",
+                            "dynamodb:GetItem",
+                            "dynamodb:UpdateItem",
+                            "dynamodb:DescribeTable",
+                            "dynamodb:Query",
+                            "dynamodb:Scan",
+                            "dynamodb:DeleteItem"
+                          ],
+                          "Resource": "arn:aws:dynamodb:ap-northeast-1:727646477609:table/*"
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "apigateway:GET",
+                            "apigateway:POST",
+                            "apigateway:PUT",
+                            "apigateway:DELETE"
+                          ],
+                          "Resource": "arn:aws:apigateway:ap-northeast-1::/*"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "Path": "/",
+                "RoleName": {
+                  "Fn::Join": [
+                    "-",
+                    [
+                      "vanpd-TestNest1",
+                      "dev",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      "lambdaRole"
+                    ]
+                  ]
+                }
+              }
+            },
+            "MainLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-ap-northeast-1-6eac5d24-5572",
+                  "S3Key": "serverless/vanpd-TestNest1/dev/1733427535137-2024-12-05T19:38:55.137Z/vanpd-TestNest1.zip"
+                },
+                "Handler": "dist/src/lambda.handler",
+                "Runtime": "nodejs18.x",
+                "FunctionName": "vanpd-TestNest1-dev-main",
+                "MemorySize": 512,
+                "Timeout": 10,
+                "Environment": {
+                  "Variables": {
+                    "TABLE_NAMES": "vantest-tasks,vantest-users"
+                  }
+                },
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "MainLogGroup"
+              ]
+            },
+            "MainLambdaVersionyYTw9GcIIHnqKF2IvIqNwWCdAyC8qizeGcHKQo3vXBM": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "MainLambdaFunction"
+                },
+                "CodeSha256": "Qc0EaH16ulDuoCJFtAVFGXnv+C+FVgb+jRoQJ5mLrl0="
+              }
+            },
+            "ApiGatewayRestApi": {
+              "Type": "AWS::ApiGateway::RestApi",
+              "Properties": {
+                "Name": "dev-vanpd-TestNest1",
+                "EndpointConfiguration": {
+                  "Types": [
+                    "EDGE"
+                  ]
+                },
+                "Policy": ""
+              }
+            },
+            "ApiGatewayResourceProxyVar": {
+              "Type": "AWS::ApiGateway::Resource",
+              "Properties": {
+                "ParentId": {
+                  "Fn::GetAtt": [
+                    "ApiGatewayRestApi",
+                    "RootResourceId"
+                  ]
+                },
+                "PathPart": "{proxy+}",
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayMethodOptions": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "AuthorizationType": "NONE",
+                "HttpMethod": "OPTIONS",
+                "MethodResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": true,
+                      "method.response.header.Access-Control-Allow-Headers": true,
+                      "method.response.header.Access-Control-Allow-Methods": true
+                    },
+                    "ResponseModels": {}
+                  }
+                ],
+                "RequestParameters": {},
+                "Integration": {
+                  "Type": "MOCK",
+                  "RequestTemplates": {
+                    "application/json": "{statusCode:200}"
+                  },
+                  "ContentHandling": "CONVERT_TO_TEXT",
+                  "IntegrationResponses": [
+                    {
+                      "StatusCode": "200",
+                      "ResponseParameters": {
+                        "method.response.header.Access-Control-Allow-Origin": "'*'",
+                        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+                      },
+                      "ResponseTemplates": {
+                        "application/json": ""
+                      }
+                    }
+                  ]
+                },
+                "ResourceId": {
+                  "Fn::GetAtt": [
+                    "ApiGatewayRestApi",
+                    "RootResourceId"
+                  ]
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayMethodProxyVarOptions": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "AuthorizationType": "NONE",
+                "HttpMethod": "OPTIONS",
+                "MethodResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": true,
+                      "method.response.header.Access-Control-Allow-Headers": true,
+                      "method.response.header.Access-Control-Allow-Methods": true
+                    },
+                    "ResponseModels": {}
+                  }
+                ],
+                "RequestParameters": {},
+                "Integration": {
+                  "Type": "MOCK",
+                  "RequestTemplates": {
+                    "application/json": "{statusCode:200}"
+                  },
+                  "ContentHandling": "CONVERT_TO_TEXT",
+                  "IntegrationResponses": [
+                    {
+                      "StatusCode": "200",
+                      "ResponseParameters": {
+                        "method.response.header.Access-Control-Allow-Origin": "'*'",
+                        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
+                      },
+                      "ResponseTemplates": {
+                        "application/json": ""
+                      }
+                    }
+                  ]
+                },
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceProxyVar"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayMethodAny": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "ANY",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Fn::GetAtt": [
+                    "ApiGatewayRestApi",
+                    "RootResourceId"
+                  ]
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "MainLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "MainLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayMethodProxyVarAny": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "ANY",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceProxyVar"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "MainLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "MainLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayDeployment1733427510370": {
+              "Type": "AWS::ApiGateway::Deployment",
+              "Properties": {
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "StageName": "dev"
+              },
+              "DependsOn": [
+                "ApiGatewayMethodOptions",
+                "ApiGatewayMethodProxyVarOptions",
+                "ApiGatewayMethodAny",
+                "ApiGatewayMethodProxyVarAny"
+              ]
+            },
+            "MainLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "MainLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
+            }
+          },
+          "Outputs": {
+            "ServerlessDeploymentBucketName": {
+              "Value": "serverless-framework-deployments-ap-northeast-1-6eac5d24-5572",
+              "Export": {
+                "Name": "sls-vanpd-TestNest1-dev-ServerlessDeploymentBucketName"
+              }
+            },
+            "MainLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "MainLambdaVersionyYTw9GcIIHnqKF2IvIqNwWCdAyC8qizeGcHKQo3vXBM"
+              },
+              "Export": {
+                "Name": "sls-vanpd-TestNest1-dev-MainLambdaFunctionQualifiedArn"
+              }
+            },
+            "ServiceEndpoint": {
+              "Description": "URL of the service endpoint",
+              "Value": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "https://",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    ".execute-api.",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ".",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    },
+                    "/dev"
+                  ]
+                ]
+              },
+              "Export": {
+                "Name": "sls-vanpd-TestNest1-dev-ServiceEndpoint"
+              }
+            },
+            "ApiGatewayUrl": {
+              "Description": "URL of the API Gateway",
+              "Value": {
+                "Fn::Sub": "https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/"
+              }
+            }
+          }
+        },
+        "vpc": {}
+      },
+      "functions": {
+        "main": {
+          "handler": "dist/src/lambda.handler",
+          "memorySize": 512,
+          "timeout": 10,
+          "events": [
+            {
+              "http": {
+                "method": "any",
+                "path": "",
+                "cors": {
+                  "origin": "*",
+                  "methods": [
+                    "OPTIONS",
+                    "ANY"
+                  ],
+                  "headers": [
+                    "Content-Type",
+                    "X-Amz-Date",
+                    "Authorization",
+                    "X-Api-Key",
+                    "X-Amz-Security-Token",
+                    "X-Amz-User-Agent",
+                    "X-Amzn-Trace-Id"
+                  ],
+                  "allowCredentials": "<REDACTED>"
+                },
+                "integration": "AWS_PROXY"
+              }
+            },
+            {
+              "http": {
+                "method": "any",
+                "path": "{proxy+}",
+                "cors": {
+                  "origin": "*",
+                  "methods": [
+                    "OPTIONS",
+                    "ANY"
+                  ],
+                  "headers": [
+                    "Content-Type",
+                    "X-Amz-Date",
+                    "Authorization",
+                    "X-Api-Key",
+                    "X-Amz-Security-Token",
+                    "X-Amz-User-Agent",
+                    "X-Amzn-Trace-Id"
+                  ],
+                  "allowCredentials": "<REDACTED>"
+                },
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "name": "vanpd-TestNest1-dev-main",
+          "package": {},
+          "memory": 512,
+          "runtime": "nodejs18.x",
+          "vpc": {},
+          "versionLogicalId": "MainLambdaVersionyYTw9GcIIHnqKF2IvIqNwWCdAyC8qizeGcHKQo3vXBM"
+        }
+      },
+      "resources": {
+        "Outputs": {
+          "ApiGatewayUrl": {
+            "Description": "URL of the API Gateway",
+            "Value": {
+              "Fn::Sub": "https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/"
+            }
+          }
+        },
+        "Resources": {}
+      }
+    },
+    "serviceRawFile": "service: vanpd-TestNest1\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs18.x\r\n  region: ap-northeast-1\r\n  timeout: 10\r\n  memorySize: 512\r\n  stage: dev\r\n  environment:\r\n    TABLE_NAMES: vantest-tasks,vantest-users\r\n  iamRoleStatements:\r\n    - Effect: Allow\r\n      Action:\r\n        - dynamodb:CreateTable\r\n        - dynamodb:PutItem\r\n        - dynamodb:GetItem\r\n        - dynamodb:UpdateItem\r\n        - dynamodb:DescribeTable\r\n        - dynamodb:Query\r\n        - dynamodb:Scan\r\n        - dynamodb:DeleteItem\r\n      Resource: arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/*\r\n\r\n    - Effect: Allow\r\n      Action:\r\n        - apigateway:GET\r\n        - apigateway:POST\r\n        - apigateway:PUT\r\n        - apigateway:DELETE\r\n      Resource: arn:aws:apigateway:${self:provider.region}::/*\r\n  \r\nfunctions:\r\n  main:\r\n    handler: dist/src/lambda.handler\r\n    memorySize: 512\r\n    timeout: 10\r\n    events:\r\n      - http:\r\n          method: ANY\r\n          path: /\r\n          cors: true \r\n      - http:\r\n          method: ANY\r\n          path: '{proxy+}'\r\n          cors: true \r\n\r\nresources:\r\n  Outputs:\r\n    ApiGatewayUrl:\r\n      Description: \"URL of the API Gateway\"\r\n      Value: !Sub \"https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/${self:provider.stage}/\"\r\n",
+    "command": [
+      "deploy"
+    ],
+    "options": {},
+    "error": null,
+    "params": {},
+    "machineId": "0b8ae0c742387021f22713eba8b06169",
+    "stage": "dev",
+    "accessKeyV2": "<REDACTED>",
+    "accessKeyV1": "<REDACTED>",
+    "orgId": "b06b3606-d962-4e51-8404-93c382291e46",
+    "orgName": "vanliulo",
+    "userId": "6PjCnfmXSb03fhjKVr",
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "userName": "vanliulo",
+    "subscription": null,
+    "userEmail": "vanpd8.it@gmail.com",
+    "serviceProviderAwsRegion": "ap-northeast-1",
+    "serviceProviderAwsCredentials": "<REDACTED>",
+    "serviceProviderAwsAccountId": "727646477609",
+    "projectType": "traditional",
+    "versionSf": "4.4.14",
+    "serviceProviderAwsCfStackName": "vanpd-TestNest1-dev",
+    "integrations": {},
+    "serviceUniqueId": "arn:aws:cloudformation:ap-northeast-1:727646477609:stack/vanpd-TestNest1-dev/9a499390-b330-11ef-910b-0e0e9c2ebfb5",
+    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:ap-northeast-1:727646477609:stack/vanpd-TestNest1-dev/9a499390-b330-11ef-910b-0e0e9c2ebfb5",
+    "serviceProviderAwsCfStackCreated": "2024-12-05T17:44:40.612Z",
+    "serviceProviderAwsCfStackUpdated": "2024-12-05T19:39:16.923Z",
+    "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
+    "serviceProviderAwsCfStackOutputs": [
+      {
+        "OutputKey": "ApiGatewayUrl",
+        "OutputValue": "https://a44v8dlj67.execute-api.ap-northeast-1.amazonaws.com/dev/",
+        "Description": "URL of the API Gateway"
+      },
+      {
+        "OutputKey": "MainLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:ap-northeast-1:727646477609:function:vanpd-TestNest1-dev-main:8",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-vanpd-TestNest1-dev-MainLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "ServiceEndpoint",
+        "OutputValue": "https://a44v8dlj67.execute-api.ap-northeast-1.amazonaws.com/dev",
+        "Description": "URL of the service endpoint",
+        "ExportName": "sls-vanpd-TestNest1-dev-ServiceEndpoint"
+      },
+      {
+        "OutputKey": "ServerlessDeploymentBucketName",
+        "OutputValue": "serverless-framework-deployments-ap-northeast-1-6eac5d24-5572",
+        "ExportName": "sls-vanpd-TestNest1-dev-ServerlessDeploymentBucketName"
+      }
+    ]
+  }
+}

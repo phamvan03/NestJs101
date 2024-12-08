@@ -1,0 +1,9 @@
+environment: "local"
+awsAccountName: "pham-van"
+
+domainName: "localhost"
+siteSubDomain: "vanpdNestJs"
+
+s3BucketName: "vanpd-test"
+
+tablePrefix: "vantest"
