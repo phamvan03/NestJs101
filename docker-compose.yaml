@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566" # Main LocalStack API port
+    environment:
+      - LOCALSTACK_API_KEY=testing
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_ACCOUNT_ID=000000000000
+      - SERVICES=dynamodb,apigateway,lambda,cloudformation,logs,iam,ssm
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./.localstack:/etc/localstack"

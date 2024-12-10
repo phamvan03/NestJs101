@@ -1,0 +1,7 @@
+environment: "local"
+awsAccountName: "test"
+
+domainName: "localhost"
+siteSubDomain: "vanpdNestJs"
+
+tablePrefix: "vantest-local"

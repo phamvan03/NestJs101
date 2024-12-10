@@ -47,40 +47,6 @@ export const handler: APIGatewayProxyHandler = async (
   event: APIGatewayProxyEvent,
   context: Context,
 ) => {
-  
-  const tablePrefix = 'vantest';
-  const userTable = `${tablePrefix}-users`;
-  const taskTable = `${tablePrefix}-tasks`;
-  const userModel = dynamoose.model(userTable, UserSchema);
-  const taskModel = dynamoose.model(taskTable, TaskSchema);
-  const doesTableExist = async (tableName: string) => {
-    try {
-      const result = await dynamoDb.describeTable({ TableName: tableName }).promise();
-      return !!result.Table; 
-    } catch (error) {
-      if (error.code === 'ResourceNotFoundException') {
-        return false;
-      }
-      throw error;
-    }
-  };
-
-  const userTableExists = await doesTableExist(userTable);
-  if (!userTableExists) {
-    console.log(`User table ${userTable} does not exist`);
-    await userModel.createTable();  
-  } else {
-    console.log(`User table ${userTable} already exists.`);
-  }
-
-  const taskTableExists = await doesTableExist(taskTable);
-  if (!taskTableExists) {
-    console.log(`Task table ${taskTable} does not exist`);
-    await taskModel.createTable(); 
-  } else {
-    console.log(`Task table ${taskTable} already exists`);
-  }
-
   cachedServer = await bootstrapServer();
   return proxy(cachedServer, event, context, 'PROMISE').promise;
 };
