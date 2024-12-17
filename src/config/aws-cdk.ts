@@ -76,7 +76,7 @@ export class ServerStack extends cdk.Stack {
     );
 
     // Log
-    new cdk.aws_logs.LogGroup(this, `vanAPiLog`, {
+    new cdk.aws_logs.LogGroup(this, `LogAPI`, {
       logGroupName: cdk.Fn.sub("/aws/lambda/${functionName}", {
         functionName: lambdaFunction.functionName,
       }),
