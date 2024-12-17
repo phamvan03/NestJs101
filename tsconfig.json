@@ -25,6 +25,7 @@
       "@event-listener/*": [
         "event-listener/*"
       ],
+      "src/*": ["./src/*"],
       "@lib/*": [
         "lib/*"
       ]

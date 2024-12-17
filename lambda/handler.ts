@@ -1,7 +1,9 @@
 import AWS from 'aws-sdk';
+import * as dotenv from 'dotenv';
 
+dotenv.config({ path: '.envrc' });
 AWS.config.update({
-    region: 'us-east-1'});
+    region: process.env.AWS_REGION});
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
